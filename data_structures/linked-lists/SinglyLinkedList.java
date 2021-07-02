@@ -13,7 +13,8 @@ public class SinglyLinkedList {
     }
 
     public SinglyLinkedList(int value) {
-        append(value);
+        if (this.length == 0)
+            append(value);
     }
 
     public void append(int val) {
@@ -49,7 +50,7 @@ public class SinglyLinkedList {
             throw new IndexOutOfBoundsException("Index " + idx + " is out of Bound!");
         if (this.length == 0) {
             prepend(val);
-        } else if (idx == this.length) {
+        } else if (idx == this.length - 1) {
             append(val);
         } else {
             Node newNode = new Node(val);
@@ -57,7 +58,7 @@ public class SinglyLinkedList {
             int idxCounter = 0;
 
             while (currentNode != null) {
-                if (idxCounter == idx) {
+                if (idxCounter == idx - 1) {
                     Node tempNode = currentNode.next;
                     currentNode.next = newNode;
                     newNode.next = tempNode;
@@ -71,6 +72,10 @@ public class SinglyLinkedList {
     }
 
     public int remove(int index) {
+        // check for invalid index
+        if (index < 0 || index > this.length)
+            throw new IndexOutOfBoundsException("Index " + index + " is out of Bound!");
+
         // if length is 0
         if (this.length == 0)
             throw new Error("Can't remove from empty list");
@@ -90,6 +95,7 @@ public class SinglyLinkedList {
         int currentIndex = 0;
         while (currentIndex != index - 1) {
             currentNode = currentNode.next;
+            currentIndex++;
         }
 
         Node removedNode = currentNode.next;
@@ -145,13 +151,12 @@ public class SinglyLinkedList {
     }
 
     public static void main(String... args) {
-        LinkedList list = new LinkedList(3);
-        list.append(4);
+        SinglyLinkedList list = new SinglyLinkedList(1);
+        list.append(2);
         list.append(5);
-        list.append(7);
-        list.insert(2, 6);
-        list.insert(5, 8);
-        list.prepend(2);
+        list.insert(2, 3);
+        list.insert(3, 4);
+        list.prepend(0);
         System.out.println(list.remove(2));
         System.out.println(list);
     }
