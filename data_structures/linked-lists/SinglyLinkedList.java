@@ -1,4 +1,4 @@
-public class LinkedList {
+public class SinglyLinkedList {
     private Node Head;
     private Node Tail;
     private int length = 0;
@@ -12,7 +12,7 @@ public class LinkedList {
         }
     }
 
-    public LinkedList(int value) {
+    public SinglyLinkedList(int value) {
         append(value);
     }
 
@@ -44,7 +44,7 @@ public class LinkedList {
         this.length++;
     }
 
-    public void insert(int val, int idx) {
+    public void insert(int idx, int val) {
         if (idx < 0 || idx > this.length)
             throw new IndexOutOfBoundsException("Index " + idx + " is out of Bound!");
         if (this.length == 0) {
@@ -70,6 +70,67 @@ public class LinkedList {
         }
     }
 
+    public int remove(int index) {
+        // if length is 0
+        if (this.length == 0)
+            throw new Error("Can't remove from empty list");
+
+        // if user wants to remove 1st node
+        if (index == 0) {
+            return removeHead();
+        }
+
+        // if user wants to remove last node
+        if (index == this.length - 1) {
+            return removeTail();
+        }
+
+        // remove from specific index
+        Node currentNode = this.Head;
+        int currentIndex = 0;
+        while (currentIndex != index - 1) {
+            currentNode = currentNode.next;
+        }
+
+        Node removedNode = currentNode.next;
+        currentNode.next = removedNode.next;
+
+        removedNode.next = null;
+        return removedNode.data;
+    }
+
+    public int removeHead() {
+        Node removedNode = this.Head;
+        // if list length is only 1
+        if (this.length == 1) {
+            this.Head = null;
+            this.Tail = null;
+        } else {
+            this.Head = removedNode.next;
+        }
+        removedNode.next = null;
+        return removedNode.data;
+    }
+
+    public int removeTail() {
+        Node removedNode = this.Tail;
+        // if length is only 1
+        if (this.length == 1) {
+            this.Head = null;
+            this.Tail = null;
+        } else {
+            Node currentNode = this.Head;
+            // traverse before the tail
+            while (currentNode.next.next != null) {
+                currentNode = currentNode.next;
+            }
+            this.Tail = currentNode;
+            currentNode.next = null;
+        }
+
+        return removedNode.data;
+    }
+
     public String toString() {
         String str = "[";
         Node currentNode = this.Head;
@@ -88,9 +149,10 @@ public class LinkedList {
         list.append(4);
         list.append(5);
         list.append(7);
-        list.insert(6, 2);
-        list.insert(8, 5);
+        list.insert(2, 6);
+        list.insert(5, 8);
         list.prepend(2);
+        System.out.println(list.remove(2));
         System.out.println(list);
     }
 }
