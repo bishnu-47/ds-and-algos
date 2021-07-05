@@ -85,7 +85,7 @@ public class DoublyLinkedList {
                     currentNode = currentNode.next;
                     idxCounter++;
                 } else { // else traverse backwards from the tail
-                    if (idxCounter == idx) {
+                    if (idxCounter - 1 == idx) {
                         Node tempNode = currentNode.prev;
                         tempNode.next = newNode;
                         newNode.next = currentNode;
@@ -152,7 +152,7 @@ public class DoublyLinkedList {
                 currentNode = currentNode.next;
                 idxCounter++;
             } else { // else traverse backwards from the tail
-                if (idxCounter == index) {
+                if (idxCounter - 1 == index) {
                     removedNode = currentNode;
                     Node prevNode = currentNode.prev;
                     Node nextNode = currentNode.next;
@@ -209,7 +209,7 @@ public class DoublyLinkedList {
         Node currentNode = this.Head;
 
         while (currentNode != null) {
-            str += (currentNode.next != null) ? currentNode.data + " -> " : currentNode.data;
+            str += (currentNode.next != null) ? currentNode.data + " <-> " : currentNode.data;
             currentNode = currentNode.next;
         }
 
@@ -224,7 +224,7 @@ public class DoublyLinkedList {
         list.insert(2, 3);
         list.insert(3, 4);
         list.prepend(0);
-        System.out.println(list.remove(2));
+        System.out.println(list.remove(4));
         System.out.println(list);
     }
 }

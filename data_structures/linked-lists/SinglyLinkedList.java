@@ -137,6 +137,25 @@ public class SinglyLinkedList {
         return removedNode.data;
     }
 
+    public String reverse() {
+        Node prevNode = null;
+        Node currentNode = this.Head;
+        Node nextNode = null;
+        this.Tail = this.Head;
+
+        while (currentNode != null) {
+            nextNode = currentNode.next; // save nextNode
+            currentNode.next = prevNode; // reverse the currentNode reference to prevNode
+
+            // advance prevNode and currentNode
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+
+        this.Head = prevNode;
+        return this.toString();
+    }
+
     public String toString() {
         String str = "[";
         Node currentNode = this.Head;
@@ -159,5 +178,6 @@ public class SinglyLinkedList {
         list.prepend(0);
         System.out.println(list.remove(2));
         System.out.println(list);
+        System.out.println(list.reverse());
     }
 }
