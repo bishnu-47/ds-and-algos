@@ -1,4 +1,3 @@
-// @SuppressWarnings("unchecked")
 public class Stack<T> {
     private Node<T> top;
     private Node<T> bottom;
