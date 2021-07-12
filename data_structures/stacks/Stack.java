@@ -60,6 +60,10 @@ public class Stack<T> {
         return this.top.data;
     }
 
+    public boolean isEmpty() {
+        return (this.length == 0) ? true : false;
+    }
+
     public String toString() {
         Node<T> currentNode = this.top;
         String str = "---TOP---\n";
