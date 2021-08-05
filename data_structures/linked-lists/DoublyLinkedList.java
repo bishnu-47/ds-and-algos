@@ -42,6 +42,7 @@ public class DoublyLinkedList {
         } else {
             Node tempNode = this.Head;
             tempNode.prev = newNode;
+
             this.Head = newNode;
             this.Head.next = tempNode;
         }
@@ -57,46 +58,18 @@ public class DoublyLinkedList {
             append(val);
         } else {
             Node newNode = new Node(val);
-            Node currentNode;
-            int idxCounter;
-            boolean traverseForward = false;
-
-            if (idx < (this.length / 2)) {
-                currentNode = this.Head;
-                idxCounter = 0;
-                traverseForward = true;
-            } else {
-                currentNode = this.Tail;
-                idxCounter = this.length - 1;
-            }
+            Node currentNode = this.Head;
+            int idxCounter = 0;
 
             while (currentNode != null) {
-                // if idx less than half of total length, then traverse forward
-                if (traverseForward) {
-                    if (idxCounter == idx - 1) {
-                        Node tempNode = currentNode.next;
-                        currentNode.next = newNode;
-                        newNode.next = tempNode;
-
-                        newNode.prev = currentNode;
-                        tempNode.prev = newNode;
-                        break;
-                    }
-                    currentNode = currentNode.next;
-                    idxCounter++;
-                } else { // else traverse backwards from the tail
-                    if (idxCounter - 1 == idx) {
-                        Node tempNode = currentNode.prev;
-                        tempNode.next = newNode;
-                        newNode.next = currentNode;
-
-                        currentNode.prev = newNode;
-                        newNode.prev = tempNode;
-                        break;
-                    }
-                    currentNode = currentNode.prev;
-                    idxCounter--;
+                if (idxCounter == idx - 1) {
+                    Node tempNode = currentNode.next;
+                    currentNode.next = newNode;
+                    newNode.next = tempNode;
+                    break;
                 }
+                currentNode = currentNode.next;
+                idxCounter++;
             }
             this.length++;
         }
@@ -122,54 +95,17 @@ public class DoublyLinkedList {
         }
 
         // remove from specific index
-        Node removedNode = this.Head;
-        Node currentNode;
-        int idxCounter;
-        boolean traverseForward = false;
-
-        if (index < (this.length / 2)) {
-            currentNode = this.Head;
-            idxCounter = 0;
-            traverseForward = true;
-        } else {
-            currentNode = this.Tail;
-            idxCounter = this.length - 1;
+        Node currentNode = this.Head;
+        int currentIndex = 0;
+        while (currentIndex != index - 1) {
+            currentNode = currentNode.next;
+            currentIndex++;
         }
 
-        while (currentNode != null) {
-            // if idx less than half of total length, then traverse forward
-            if (traverseForward) {
-                if (idxCounter == index - 1) {
-                    removedNode = currentNode;
-                    Node nextNode = removedNode.next;
-                    Node prevNode = removedNode.prev;
+        Node removedNode = currentNode.next;
+        currentNode.next = removedNode.next;
 
-                    // create new ties
-                    prevNode.next = nextNode;
-                    nextNode.prev = prevNode;
-                    break;
-                }
-                currentNode = currentNode.next;
-                idxCounter++;
-            } else { // else traverse backwards from the tail
-                if (idxCounter - 1 == index) {
-                    removedNode = currentNode;
-                    Node prevNode = currentNode.prev;
-                    Node nextNode = currentNode.next;
-
-                    // create new ties
-                    prevNode.next = nextNode;
-                    nextNode.prev = prevNode;
-                    break;
-                }
-                currentNode = currentNode.prev;
-                idxCounter--;
-            }
-        }
-        // break old ties
         removedNode.next = null;
-        removedNode.prev = null;
-
         return removedNode.data;
     }
 
@@ -180,9 +116,7 @@ public class DoublyLinkedList {
             this.Head = null;
             this.Tail = null;
         } else {
-            Node newHead = removedNode.next;
-            newHead.prev = null;
-            this.Head = newHead;
+            this.Head = removedNode.next;
         }
         removedNode.next = null;
         return removedNode.data;
@@ -195,10 +129,13 @@ public class DoublyLinkedList {
             this.Head = null;
             this.Tail = null;
         } else {
-            Node newTail = removedNode.prev;
-            newTail.next = null;
-            removedNode.prev = null;
-            this.Tail = newTail;
+            Node currentNode = this.Head;
+            // traverse before the tail
+            while (currentNode.next.next != null) {
+                currentNode = currentNode.next;
+            }
+            this.Tail = currentNode;
+            currentNode.next = null;
         }
 
         return removedNode.data;
@@ -209,7 +146,7 @@ public class DoublyLinkedList {
         Node currentNode = this.Head;
 
         while (currentNode != null) {
-            str += (currentNode.next != null) ? currentNode.data + " <-> " : currentNode.data;
+            str += (currentNode.next != null) ? currentNode.data + " -> " : currentNode.data;
             currentNode = currentNode.next;
         }
 
@@ -224,7 +161,7 @@ public class DoublyLinkedList {
         list.insert(2, 3);
         list.insert(3, 4);
         list.prepend(0);
-        System.out.println(list.remove(4));
+        System.out.println(list.remove(2));
         System.out.println(list);
     }
 }
