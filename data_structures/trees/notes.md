@@ -12,7 +12,7 @@
         -   height of tree with only 1 node (_i.e root node_) is 0
         -   height of an empty tree is -1
 
-### Binary Tree:
+### Binary Tree
 
 Each Node in binary tree can have **at most 2 children**
 
@@ -32,8 +32,17 @@ Each Node in binary tree can have **at most 2 children**
 -   **Balanced Binary Tree**: _difference between_ the **height of left** and **right sub-tree** for every node is _not more than k_ (mostly 1)
     > diff = | h<sub>left</sub> - h<sub>right</sub> |
 
-#### Binary tree with array:
+#### Binary tree with array
 
 > for node at index _i_,
 > left child index = _2i+1_
 > left child index = _2i+2_
+
+#### Binary Search Tree (BST)
+
+Binary Search Tree is a _binary tree_ in which for each node, value of all the nodes in _left sub-tree is lesser_ and value of all nodes in _right sub-tree is greater_.
+| | **Array (unsorted)**| **Linked List**|**Array(Sorted)**| **BST(balanced)**|
+|:--:| :--:|:--:|:--:|:--:|
+|**Search(x)**|O(n)|O(n)|O(log n)|O(log n)|
+|**Insert(x)**|O(1)|O(1)|O(n)|O(log n)|
+|**Remove(x)**|O(n)|O(n)|O(n)|O(log n)|
