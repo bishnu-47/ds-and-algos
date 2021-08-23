@@ -1,3 +1,5 @@
+import java.util.Queue;
+
 public class BST {
 
     class Node {
@@ -63,6 +65,42 @@ public class BST {
         }
     }
 
+    public int findHeight(){
+        return findHeightRec(this.root);
+    }
+
+    private int findHeightRec(Node root){
+        if(root == null)
+            return -1;
+
+        int left = findHeightRec(root.left);
+        int right = findHeightRec(root.right);
+
+        return Math.max(left, right) + 1;
+    }
+
+    public int findMin(){
+        if(this.root == null)
+            return -1;
+
+        Node currentNode = this.root;
+        while(currentNode.left != null)
+            currentNode = currentNode.left;
+
+        return currentNode.data;
+    }
+
+    public int findMax(){
+        if(this.root == null)
+            return -1;
+
+        Node currentNode = this.root;
+        while(currentNode.right != null)
+            currentNode = currentNode.right;
+
+        return currentNode.data;
+    }
+
     public String toString(){
         String str= "";
 
@@ -86,8 +124,14 @@ public class BST {
         tree.insert(15);
         tree.insert(7);
         tree.insert(25);
+        tree.insert(34);
+        tree.insert(8);
+        tree.insert(9);
 
         System.out.println(tree.search(25));
+        System.out.println(tree.findMin());
+        System.out.println(tree.findMax());
+        System.out.println(tree.findHeight());
     }
 }
 
