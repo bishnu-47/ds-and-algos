@@ -1,4 +1,5 @@
 import java.util.Queue;
+import java.util.LinkedList;
 
 public class BST {
 
@@ -32,12 +33,14 @@ public class BST {
             if (data < currentNode.data) {
                 if (currentNode.left == null) {
                     currentNode.left = newNode;
+                    break;
                 } else {
                     currentNode = currentNode.left;
                 }
             } else if (data > currentNode.data) {
                 if (currentNode.right == null) {
                     currentNode.right = newNode;
+                    break;
                 } else {
                     currentNode = currentNode.right;
                 }
@@ -65,6 +68,7 @@ public class BST {
         }
     }
 
+    // height finding
     public int findHeight(){
         return findHeightRec(this.root);
     }
@@ -79,6 +83,7 @@ public class BST {
         return Math.max(left, right) + 1;
     }
 
+    // finding min and max
     public int findMin(){
         if(this.root == null)
             return -1;
@@ -101,37 +106,84 @@ public class BST {
         return currentNode.data;
     }
 
+    // traversal algos:
+    // BFS- breadth first search
+    public void levelOrderTraversal(){
+      if(this.root == null)
+        return;
+
+      Queue<Node> q =  new LinkedList<>();
+      Node currentNode = this.root;
+      q.add(currentNode);
+
+      while(q.peek() != null){
+        currentNode = q.peek();
+
+        System.out.print(currentNode.data+" ");
+        // if left Node add
+        if(currentNode.left != null)
+          q.add(currentNode.left);
+        // if right Node add
+        if(currentNode.right != null)
+          q.add(currentNode.right);
+        // remove current Node
+        q.remove();
+      }
+    }
+
+    // DFS: depth first search
+    public void preOrderTraversal() { preOrderRec(this.root); }
+    private void preOrderRec(Node root){
+      if(root == null) return;
+
+      System.out.print(root.data+" ");
+      preOrderRec(root.left);
+      preOrderRec(root.right);
+    }
+
+    public void inOrderTraversal() { inOrderRec(this.root); }
+    private void inOrderRec(Node root){
+      if(root == null) return;
+
+      preOrderRec(root.left);
+      System.out.print(root.data+" ");
+      preOrderRec(root.right);
+    }
+
+    public void postOrderTraversal() { postOrderRec(this.root); }
+    private void postOrderRec(Node root){
+      if(root == null) return;
+
+      preOrderRec(root.left);
+      preOrderRec(root.right);
+      System.out.print(root.data+" ");
+    }
+
     public String toString(){
         String str= "";
-
-        Node currentNode = this.root;
-        // traverse the left sub tree
-        // return to root
-        // traverse the right sub tree
-        // while(currentNode != null){
-        //     str+=currentNode.data;
-        //     if(currentNode.left != null){
-
-        //     }
-        // }
-
         return str;
     }
 
     public static void main(String... args) {
         BST tree = new BST();
 
-        tree.insert(15);
-        tree.insert(7);
-        tree.insert(25);
-        tree.insert(34);
-        tree.insert(8);
-        tree.insert(9);
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+        tree.insert(5);
 
         System.out.println(tree.search(25));
         System.out.println(tree.findMin());
         System.out.println(tree.findMax());
         System.out.println(tree.findHeight());
+        System.out.println("Level Order Traversal:");
+        tree.levelOrderTraversal();
+        System.out.println("\nPreorder Traversal:");
+        tree.preOrderTraversal(); 
+        System.out.println("\nInorder Traversal:");
+        tree.inOrderTraversal();
+        System.out.println("\nPostorder Traversal:");
+        tree.postOrderTraversal();
     }
 }
-
