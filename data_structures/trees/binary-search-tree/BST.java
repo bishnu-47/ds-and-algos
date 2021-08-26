@@ -159,9 +159,20 @@ public class BST {
       System.out.print(root.data+" ");
     }
 
-    public String toString(){
-        String str= "";
-        return str;
+    // check if given binary tree is BST
+    public static boolean isBinarySearchTree(Node root){
+      return isBstUtil(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    private static boolean isBstUtil(Node root, int minVal, int maxVal){
+      if(root == null) return true;
+
+      if(root.data > minVal
+        && root.data < maxVal
+        && isBstUtil(root.left, minVal, root.data)
+        && isBstUtil(root.right, root.data, maxVal))
+        return true;
+      else
+        return false;
     }
 
     public static void main(String... args) {
@@ -174,16 +185,17 @@ public class BST {
         tree.insert(5);
 
         System.out.println(tree.search(25));
-        System.out.println(tree.findMin());
-        System.out.println(tree.findMax());
-        System.out.println(tree.findHeight());
+        System.out.println("Min: "+tree.findMin());
+        System.out.println("Max: "+tree.findMax());
+        System.out.println("Height: "+tree.findHeight());
         System.out.println("Level Order Traversal:");
         tree.levelOrderTraversal();
         System.out.println("\nPreorder Traversal:");
-        tree.preOrderTraversal(); 
+        tree.preOrderTraversal();
         System.out.println("\nInorder Traversal:");
         tree.inOrderTraversal();
         System.out.println("\nPostorder Traversal:");
         tree.postOrderTraversal();
+        System.out.println("\nis BST? -> " + isBinarySearchTree(tree.root));
     }
 }

@@ -49,7 +49,7 @@ Binary Search Tree is a _binary tree_ in which for each node, value of all the n
 
 ##### Traversal in BST:
 - **Breadth-first**
-	- Level order: Node at each level(depth) is visited before going to next level.
+	- Level order: Node at each level(depth) is visited before going to next level. Traversal is done using a queue.
 - **Depth-first**
 	- Preorder: `<root><left><right>`
 	- Inorder: `<left><root><right>` (would give a sorted list in BST)
